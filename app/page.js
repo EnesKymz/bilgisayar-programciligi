@@ -35,6 +35,12 @@ export default function CoursesWebsite() {
       description: "Programlama, Veri Yapıları",
       pdfs: [],
     },
+    webtabanlikodlama: {
+      id: "webtabanlikodlama",
+      title: "Web Tabanlı Kodlama",
+      description: "Kodlamanın Temelleri",
+      pdfs: [],
+    },
   });
 
   const [query, setQuery] = useState("");
