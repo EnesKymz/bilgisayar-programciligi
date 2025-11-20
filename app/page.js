@@ -153,15 +153,6 @@ useEffect(() => {
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Dersler & PDF Arşivi</h1>
           </div>
-          <div className="hidden md:block">
-            <input
-              aria-label="Ders ara"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Ders, konu veya açıklama ara..."
-              className="border rounded-lg px-3 py-2 w-72 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            />
-          </div>
         </div>
       </header>
 
@@ -191,17 +182,6 @@ useEffect(() => {
         </section>
 
         <aside className="space-y-4">
-          <div className="bg-white p-4 rounded-2xl shadow">
-            <h3 className="font-semibold">Hızlı Ara</h3>
-            <input
-              aria-label="Mobil arama"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Ders adı girin..."
-              className="mt-3 border rounded-lg px-3 py-2 w-full shadow-sm"
-            />
-          </div>
-
           <div className="bg-white p-4 rounded-2xl shadow">
             <h3 className="font-semibold">Yardımcı Bilgiler</h3>
             <ul className="text-sm text-gray-600 mt-2 space-y-2">
