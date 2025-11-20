@@ -48,41 +48,46 @@ export default function CoursesWebsite() {
   const [loading,setLoading] = useState(false);
   const fileInputRef = useRef(null); 
 useEffect(() => {
-  if(courses.dijitaldonusum.pdfs.length >0) return;
-  const getData=async()=>{
-    try{
-    setLoading(true)
-    const data = await listFiles(); 
-     if (!data) return;
-    
-    setCourses(prev =>{
-      const updatedCourses = {...prev};
-      for (const [key, pdfList] of Object.entries(data)) {
-        if (updatedCourses[key]) {
-          updatedCourses[key] = {
-          ...updatedCourses[key],
-          pdfs: [
-            ...updatedCourses[key].pdfs,
-            ...pdfList.filter(newPdf => 
-              !updatedCourses[key].pdfs.some(oldPdf => oldPdf.id === newPdf.id)
-            )
-          ]
-        };
+  const getData = async () => {
+    try {
+       setLoading(true);
+      const data = await listFiles();
+      if (!data) return;
+
+      setCourses(prev => {
+        const updated = { ...prev };
+
+        for (const key of Object.keys(prev)) {
+          const incomingPdfs = data[key] || [];
+          const currentPdfs = prev[key].pdfs || [];
+
+          const combinedPdfs = [...currentPdfs, ...incomingPdfs];
+
+     
+          const uniquePdfs = combinedPdfs.filter((pdf, index, self) =>
+            index === self.findIndex((t) => (
+              t.name === pdf.name 
+            ))
+          );
+
+          updated[key] = {
+            ...prev[key],
+            pdfs: uniquePdfs 
+          };
         }
-      }
-return updatedCourses;
-});
-  
-}catch(error) {
-  console.error(error)
-}finally{
-  setLoading(false)
-}
-  }
-  getData()
-  
+
+        return updated;
+      });
+    } catch (error) {
+      console.error("Veri hatası:", error);
+    } finally {
+       setLoading(false);
+    }
+  };
+
+  getData();
+}, []);
  
-}, []); 
   function openCourse(course) {
     setSelectedCourse(course);
   }
