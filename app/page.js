@@ -50,7 +50,6 @@ export default function CoursesWebsite() {
 useEffect(() => {
   const getData=async()=>{
     try{
-
     setLoading(true)
     const data = await listFiles(); 
      if (!data) return;
@@ -60,9 +59,14 @@ useEffect(() => {
       for (const [key, pdfList] of Object.entries(data)) {
         if (updatedCourses[key]) {
           updatedCourses[key] = {
-            ...updatedCourses[key],
-            pdfs: [...updatedCourses[key].pdfs, ...pdfList]
-          };
+  ...updatedCourses[key],
+  pdfs: [
+    ...updatedCourses[key].pdfs,
+    ...pdfList.filter(newPdf => 
+      !updatedCourses[key].pdfs.some(oldPdf => oldPdf.id === newPdf.id)
+    )
+  ]
+};
         }
       }
 
