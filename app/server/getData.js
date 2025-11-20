@@ -37,6 +37,5 @@ export async function listFiles() {
 }
 
   await traverseFolder(folderId);
-  console.log(folderPdfs)
   return folderPdfs;
 }
