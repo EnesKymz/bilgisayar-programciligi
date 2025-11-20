@@ -10,47 +10,53 @@ export default function CoursesWebsite() {
       title: "Dijital Dönüşüm",
       description: "Dijital Dönüşüm",
       pdfs: [],
+      cikmissorular:[]
     },
     ingilizce: {
       id: "ingilizce",
       title: "İngilizce - I",
       description: "İngilizce",
       pdfs: [],
+      cikmissorular:[]
     },
     bilisimteknolojileri: {
       id: "bilisimteknolojileri",
       title: "Bilişim Teknolojileri",
       description: "Programlama, Veri Yapıları",
       pdfs: [],
+      cikmissorular:[]
     },
     islemtablosuprogramlama: {
       id: "islemtablosuprogramlama",
       title: "İşlem Tablosu Programlama",
       description: "Programlama, Veri Yapıları",
       pdfs: [],
+      cikmissorular:[]
     },
     kullanicideneyimtasarimi: {
       id: "kullanicideneyimtasarimi",
       title: "Kullanıcı Deneyimi Tasarımı",
       description: "Programlama, Veri Yapıları",
       pdfs: [],
+      cikmissorular:[]
     },
     webtabanlikodlama: {
       id: "webtabanlikodlama",
       title: "Web Tabanlı Kodlama",
       description: "Kodlamanın Temelleri",
       pdfs: [],
+      cikmissorular:[]
     },
   });
 
   const [query, setQuery] = useState("");
-  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState({value:"",course:[]});
   const [loading,setLoading] = useState(false);
   const fileInputRef = useRef(null); 
 useEffect(() => {
   const getData = async () => {
     try {
-       setLoading(true);
+      setLoading(true);
       const data = await listFiles();
       if (!data) return;
 
@@ -58,21 +64,33 @@ useEffect(() => {
         const updated = { ...prev };
 
         for (const key of Object.keys(prev)) {
-          const incomingPdfs = data[key] || [];
-          const currentPdfs = prev[key].pdfs || [];
+          // API'den gelen veriyi al (Artık data[key] bir obje: { pdfs: [], cikmissorular: [] })
+          const courseData = data[key] || {};
 
+          // --- 1. PDF'leri İşle (Mevcut Mantık) ---
+          const incomingPdfs = courseData.pdfs || [];
+          const currentPdfs = prev[key].pdfs || [];
           const combinedPdfs = [...currentPdfs, ...incomingPdfs];
 
-     
           const uniquePdfs = combinedPdfs.filter((pdf, index, self) =>
-            index === self.findIndex((t) => (
-              t.name === pdf.name 
-            ))
+            index === self.findIndex((t) => t.name === pdf.name)
           );
 
+          // --- 2. ÇIKMIŞ SORULARI İşle (Yeni Eklenen Kısım - Aynı Mantık) ---
+          const incomingQuestions = courseData.cikmissorular || [];
+          // State'te henüz bu alan yoksa boş dizi kabul et
+          const currentQuestions = prev[key].cikmissorular || [];
+          const combinedQuestions = [...currentQuestions, ...incomingQuestions];
+
+          const uniqueQuestions = combinedQuestions.filter((q, index, self) =>
+            index === self.findIndex((t) => t.name === q.name)
+          );
+
+          // Güncellenmiş objeyi oluştur
           updated[key] = {
             ...prev[key],
-            pdfs: uniquePdfs 
+            pdfs: uniquePdfs,
+            cikmissorular: uniqueQuestions // Yeni temizlenmiş listeyi buraya atıyoruz
           };
         }
 
@@ -81,19 +99,18 @@ useEffect(() => {
     } catch (error) {
       console.error("Veri hatası:", error);
     } finally {
-       setLoading(false);
+      setLoading(false);
     }
   };
 
   getData();
 }, []);
- 
-  function openCourse(course) {
-    setSelectedCourse(course);
+  function openCourse(value,course) {
+    setSelectedCourse(value,course);
   }
 
   function closeCourse() {
-    setSelectedCourse(null);
+    setSelectedCourse({value:"",course:[]});
   }
 
   // PDF indirme için doğrudan <a> kullanıyoruz (download) — cross-origin durumunda sunucuda doğru headers gerekir
@@ -132,20 +149,6 @@ useEffect(() => {
     }
   }
 
-  function handleRemovePdf(courseId, pdfId) {
-    if (!confirm("Bu PDF'i silmek istediğinizden emin misiniz?")) return;
-    setCourses((prev) =>
-      prev.map((c) => (c.id === courseId ? { ...c, pdfs: c.pdfs.filter((p) => p.id !== pdfId) } : c))
-    );
-  }
-
-  // Arama + filtreleme
- /* const filtered = courses.filter(
-    (c) =>
-      c.title.toLowerCase().includes(query.toLowerCase()) ||
-      c.description.toLowerCase().includes(query.toLowerCase())
-  );
-*/
   return (
     <div className="min-h-screen bg-gray-50 p-6 md:p-12 font-sans">
       <header className="max-w-6xl mx-auto mb-8">
@@ -168,10 +171,16 @@ useEffect(() => {
         <div className="mt-3 flex flex-wrap gap-2">
           <span className="text-sm bg-indigo-50 text-indigo-600 px-2 py-1 rounded">{course.pdfs.length} PDF</span>
           <button
-            onClick={() => openCourse(course)}
+            onClick={() => openCourse({value:"notlar",course})}
             className="ml-2 text-sm bg-indigo-600 text-white px-3 py-1 rounded hover:opacity-95"
           >
             Görüntüle / İndir
+          </button>
+          <button
+            onClick={() => openCourse({value:"cikmissorular",course})}
+            className="ml-2 text-sm bg-red-600 text-white px-3 py-1 rounded hover:opacity-95"
+          >
+            Çıkmış Sorular
           </button>
         </div>
       </div>
@@ -192,14 +201,14 @@ useEffect(() => {
       </main>
 
       {/* Modal: Seçili dersin PDF listesi */}
-      {selectedCourse && (
+      {selectedCourse.value==="notlar" ? (
         <div className="fixed inset-0 z-40 flex items-center justify-center">
           <div className="absolute inset-0 bg-black/40" onClick={closeCourse}></div>
           <div className="relative bg-white w-full max-w-3xl mx-4 rounded-2xl p-6 shadow-xl z-50">
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="text-2xl font-semibold text-black">{selectedCourse.title}</h3>
-                <p className="text-gray-500 mt-1">{selectedCourse.description}</p>
+                <h3 className="text-2xl font-semibold text-black">{selectedCourse.course.title}</h3>
+                <p className="text-gray-500 mt-1">{selectedCourse.course.description}</p>
               </div>
               <div className="space-x-2">
                 <button onClick={closeCourse} className="text-gray-500 hover:text-gray-800">Kapat</button>
@@ -207,12 +216,12 @@ useEffect(() => {
             </div>
 
             <div className="mt-6">
-              {selectedCourse.pdfs.length === 0 && (
+              {selectedCourse.course.pdfs.length === 0 && (
                 <div className="text-center text-gray-600">Bu derse ait PDF bulunmuyor.</div>
               )}
 
               <ul className="space-y-3">
-                {selectedCourse.pdfs.map((pdf) => (
+                {selectedCourse.course.pdfs.map((pdf) => (
                   <li key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
                     <div>
                       <div className="font-medium text-black">{pdf.name}</div>
@@ -236,7 +245,52 @@ useEffect(() => {
             </div>
           </div>
         </div>
-      )}
+      ) : selectedCourse.value==="cikmissorular" ? (
+        <div className="fixed inset-0 z-40 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/40" onClick={closeCourse}></div>
+          <div className="relative bg-white w-full max-w-3xl mx-4 rounded-2xl p-6 shadow-xl z-50">
+            <div className="flex items-start justify-between">
+              <div>
+                <h3 className="text-2xl font-semibold text-black">{selectedCourse.course.title}</h3>
+                <p className="text-gray-500 mt-1">{selectedCourse.course.description}</p>
+              </div>
+              <div className="space-x-2">
+                <button onClick={closeCourse} className="text-gray-500 hover:text-gray-800">Kapat</button>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              {selectedCourse.course.cikmissorular.length === 0 && (
+                <div className="text-center text-gray-600">Bu derse ait PDF bulunmuyor.</div>
+              )}
+
+              <ul className="space-y-3">
+                {selectedCourse.course.cikmissorular.map((pdf) => (
+                  <li key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                    <div>
+                      <div className="font-medium text-black">{pdf.name}</div>
+                      <div className="text-xs text-gray-500">{Math.round((pdf.size || 0) / 1024)} KB</div>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <a href={pdf.url} target="_blank" rel="noreferrer" download={pdf.name} className="text-sm bg-indigo-600 text-white px-3 py-1 rounded">
+                        İndir
+                      </a>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-6">
+                <div className="mt-3 flex items-center gap-3">
+                  <span className="text-sm text-gray-500">Seçilen dosya tarayıcıda geçici olarak kaydedilir. Gerçek kullanım için sunucu depolama kullanın.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ):(<div></div>)}
+      
 
       {/* Gizli file input - admin için */}
       <input ref={fileInputRef} type="file" accept="application/pdf" className="hidden" onChange={onFileChange} />
