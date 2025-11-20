@@ -49,7 +49,6 @@ useEffect(() => {
     const data = await listFiles(); 
      if (!data) return;
     
-  for(const [key,pdfList] of Object.entries(data)){
     setCourses(prev =>{
       const updatedCourses = {...prev};
       for (const [key, pdfList] of Object.entries(data)) {
@@ -63,7 +62,7 @@ useEffect(() => {
 
       return updatedCourses;
     });
-  }
+  
 }catch(error) {
   console.error(error)
 }finally{
