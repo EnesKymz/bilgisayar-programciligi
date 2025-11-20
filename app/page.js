@@ -169,7 +169,7 @@ useEffect(() => {
       <div>
         <h2 className="text-xl font-semibold text-black">{course.title}</h2>
         <div className="mt-3 flex flex-wrap gap-2">
-          <span className="text-sm bg-indigo-50 text-indigo-600 px-2 py-1 rounded">{course.pdfs.length} PDF</span>
+          <span className="text-sm bg-indigo-50 text-indigo-600 px-2 py-1 rounded">{course.pdfs.length} Not {course.cikmissorular.length} Çıkmış Soru</span>
           <button
             onClick={() => openCourse({value:"notlar",course})}
             className="ml-2 text-sm bg-indigo-600 text-white px-3 py-1 rounded hover:opacity-95"
