@@ -59,19 +59,18 @@ useEffect(() => {
       for (const [key, pdfList] of Object.entries(data)) {
         if (updatedCourses[key]) {
           updatedCourses[key] = {
-  ...updatedCourses[key],
-  pdfs: [
-    ...updatedCourses[key].pdfs,
-    ...pdfList.filter(newPdf => 
-      !updatedCourses[key].pdfs.some(oldPdf => oldPdf.id === newPdf.id)
-    )
-  ]
-};
+          ...updatedCourses[key],
+          pdfs: [
+            ...updatedCourses[key].pdfs,
+            ...pdfList.filter(newPdf => 
+              !updatedCourses[key].pdfs.some(oldPdf => oldPdf.id === newPdf.id)
+            )
+          ]
+        };
         }
       }
-
-      return updatedCourses;
-    });
+return updatedCourses;
+});
   
 }catch(error) {
   console.error(error)
@@ -83,7 +82,6 @@ useEffect(() => {
   
  
 }, []); 
-  // Ders seçimi
   function openCourse(course) {
     setSelectedCourse(course);
   }
@@ -94,7 +92,6 @@ useEffect(() => {
 
   // PDF indirme için doğrudan <a> kullanıyoruz (download) — cross-origin durumunda sunucuda doğru headers gerekir
 
-  // Yeni PDF ekleme (yerel simulasyon)
   function handleAddPdf(courseId, file) {
     if (!file) return;
     const url = URL.createObjectURL(file); // tarayıcıda geçici link
@@ -184,9 +181,6 @@ useEffect(() => {
     </div>
   </article>
             ))):(<div>Dosyalar yükleniyor lütfen bekleyiniz...</div>)}
-
-
-       
           </div>
         </section>
 
@@ -249,14 +243,7 @@ useEffect(() => {
               </ul>
 
               <div className="mt-6">
-                <h4 className="font-medium">Yeni PDF yükle (admin)</h4>
                 <div className="mt-3 flex items-center gap-3">
-                  <button
-                    onClick={() => handleUploadClick(selectedCourse.id)}
-                    className="px-4 py-2 bg-emerald-600 text-white rounded-lg"
-                  >
-                    Dosya Seç
-                  </button>
                   <span className="text-sm text-gray-500">Seçilen dosya tarayıcıda geçici olarak kaydedilir. Gerçek kullanım için sunucu depolama kullanın.</span>
                 </div>
               </div>
