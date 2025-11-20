@@ -173,7 +173,7 @@ useEffect(() => {
   <article key={course.id} className="bg-white rounded-2xl p-6 shadow">
     <div className="flex items-start justify-between">
       <div>
-        <h2 className="text-xl font-semibold">{course.title}</h2>
+        <h2 className="text-xl font-semibold text-black">{course.title}</h2>
         <div className="mt-3 flex flex-wrap gap-2">
           <span className="text-sm bg-indigo-50 text-indigo-600 px-2 py-1 rounded">{course.pdfs.length} PDF</span>
           <button
@@ -218,7 +218,7 @@ useEffect(() => {
           <div className="relative bg-white w-full max-w-3xl mx-4 rounded-2xl p-6 shadow-xl z-50">
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="text-2xl font-semibold">{selectedCourse.title}</h3>
+                <h3 className="text-2xl font-semibold text-black">{selectedCourse.title}</h3>
                 <p className="text-gray-500 mt-1">{selectedCourse.description}</p>
               </div>
               <div className="space-x-2">
@@ -235,7 +235,7 @@ useEffect(() => {
                 {selectedCourse.pdfs.map((pdf) => (
                   <li key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
                     <div>
-                      <div className="font-medium">{pdf.name}</div>
+                      <div className="font-medium text-black">{pdf.name}</div>
                       <div className="text-xs text-gray-500">{Math.round((pdf.size || 0) / 1024)} KB</div>
                     </div>
 
