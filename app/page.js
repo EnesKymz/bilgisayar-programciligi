@@ -220,8 +220,8 @@ useEffect(() => {
                 <div className="text-center text-gray-600">Bu derse ait PDF bulunmuyor.</div>
               )}
 
-              <ul className="space-y-3">
-                {selectedCourse.course.pdfs.map((pdf) => (
+                  <ul className="space-y-3 overflow-auto max-h-[400px] pr-2">
+                  {selectedCourse.course.pdfs.map((pdf) => (
                   <li key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
                     <div>
                       <div className="font-medium text-black">{pdf.name}</div>
@@ -264,8 +264,8 @@ useEffect(() => {
                 <div className="text-center text-gray-600">Bu derse ait PDF bulunmuyor.</div>
               )}
 
-              <ul className="space-y-3">
-                {selectedCourse.course.cikmissorular.map((pdf) => (
+                  <ul className="space-y-3 overflow-auto max-h-[400px] pr-2">
+                  {selectedCourse.course.cikmissorular.map((pdf) => (
                   <li key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
                     <div>
                       <div className="font-medium text-black">{pdf.name}</div>
