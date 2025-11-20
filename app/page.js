@@ -48,6 +48,7 @@ export default function CoursesWebsite() {
   const [loading,setLoading] = useState(false);
   const fileInputRef = useRef(null); 
 useEffect(() => {
+  if(courses.dijitaldonusum.pdfs.length >0) return;
   const getData=async()=>{
     try{
     setLoading(true)
