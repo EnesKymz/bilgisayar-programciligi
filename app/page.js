@@ -332,7 +332,182 @@ export default function CoursesWebsite() {
       title: "İşlem Tablosu Programlama",
       description: "Programlama, Veri Yapıları",
       pdfs: [],
-      cikmissorular:[]
+      cikmissorular:[],
+      onemli:(
+        <div className="max-w-3xl mx-auto py-12 px-6 font-sans text-slate-800 bg-white min-h-screen">
+    <section className="mb-12">
+        <h2 className="text-2xl font-bold text-blue-700 mb-4">1. Ünite: VBA&apos;ya Giriş</h2>
+        <p className="text-slate-600 mb-6 italic text-sm bg-slate-50 p-3 rounded-md border-l-4 border-blue-700">Bu üniteden genellikle 3-4 soru gelir.</p>
+        
+        <div className="space-y-6">
+            <div>
+                <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-lg font-bold text-slate-900">Dosya Uzantıları</h3>
+                    <span className="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded border border-red-100">Banko Soru</span>
+                </div>
+                <ul className="list-disc pl-5 space-y-2 text-slate-700">
+                    <li><code className="font-bold text-pink-600">.xlsm</code>: Makro içeren Excel dosyasıdır. <span className="text-xs border border-slate-300 px-1 rounded ml-1">2024 Sorusu</span></li>
+                    <li><code className="font-bold text-slate-600">.xlsx</code>: Standart Excel dosyasıdır, makro barındırmaz.</li>
+                </ul>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-slate-50 p-4 rounded border border-slate-100">
+                    <h3 className="font-bold text-slate-900 mb-2">Kısayollar</h3>
+                    <ul className="space-y-3 text-sm">
+                        <li className="flex justify-between items-center">
+                            <span>VBE&apos;yi Açma</span>
+                            <span className="font-mono bg-white border border-slate-300 px-2 rounded shadow-sm">Alt + F11</span>
+                        </li>
+                        <li className="flex justify-between items-center">
+                            <span>Makroları Görme</span>
+                            <span className="font-mono bg-white border border-slate-300 px-2 rounded shadow-sm">Alt + F8</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 className="font-bold text-slate-900 mb-2">VBE Ayarları</h3>
+                    <p className="text-sm text-slate-700 mb-2">Değişken tanımlamayı zorunlu kılan ayar: <strong>&quot;Require Variable Declaration&quot;</strong></p>
+                    <p className="text-sm text-slate-700">Bu ayar kodun başına şunu ekler: <code className="font-mono text-blue-600 bg-blue-50 px-1">Option Explicit</code></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section className="mb-12">
+        <h2 className="text-2xl font-bold text-blue-700 mb-4">2. Ünite: Visual Basic&apos;in Temelleri</h2>
+        
+        <div className="space-y-6">
+            <div>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">Veri Türleri</h3>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-slate-700">
+                    <li className="border border-slate-100 p-2 rounded"><strong className="text-purple-700">Boolean:</strong> Sadece True/False. <span className="text-xs text-slate-400">(2024 Sorusu)</span></li>
+                    <li className="border border-slate-100 p-2 rounded"><strong className="text-purple-700">Integer / Long:</strong> Tam sayılar.</li>
+                    <li className="border border-slate-100 p-2 rounded"><strong className="text-purple-700">String:</strong> Metin ifadeleri.</li>
+                    <li className="border border-slate-100 p-2 rounded"><strong className="text-purple-700">Variant:</strong> Türü belli olmayan, her şeyi tutan.</li>
+                </ul>
+            </div>
+
+            <div className="space-y-4">
+                <div>
+                    <h3 className="font-bold text-slate-900">Operatörler</h3>
+                    <p className="text-slate-700 mt-1"><code className="font-mono font-bold text-pink-600">Mod</code>: Bölme işleminden kalanı verir. (Örn: 10 Mod 3 = 1).</p>
+                </div>
+                <div>
+                    <h3 className="font-bold text-slate-900">Diziler (Arrays)</h3>
+                    <ul className="list-disc pl-5 text-slate-700 mt-1">
+                        <li><strong>ReDim:</strong> Boyutu değiştirir (veri silinir).</li>
+                        <li><strong>ReDim Preserve:</strong> Verileri koruyarak boyutu değiştirir. <span className="text-xs font-bold text-red-600 bg-red-50 px-1 rounded">2024</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section className="mb-12">
+        <h2 className="text-2xl font-bold text-blue-700 mb-4">3. Ünite: Program Akışını Yönetmek</h2>
+        <p className="text-slate-600 mb-6 italic text-sm bg-slate-50 p-3 rounded-md border-l-4 border-blue-700">Sınavın en teknik kısmı burasıdır.</p>
+
+        <div className="space-y-6">
+            <div>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">Karar Yapıları</h3>
+                <ul className="space-y-2 text-slate-700">
+                    <li><code className="font-mono font-bold text-blue-600">If-Then-Else</code>: Klasik &quot;Eğer&quot; koşulu.</li>
+                    <li><code className="font-mono font-bold text-blue-600">Select Case</code>: Bir değişkenin birçok değerine göre işlem yapar. (If-Else alternatifi).</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">Döngüler</h3>
+                <ul className="space-y-2 text-slate-700">
+                    <li><code className="font-mono font-bold text-green-600">For...Next</code>: Belirli sayı kadar döner.</li>
+                    <li><code className="font-mono font-bold text-green-600">For Each...Next</code>: Bir <strong>koleksiyonun</strong> içinde dolaşır. <span className="text-xs border border-slate-300 px-1 rounded ml-1">2024 Sorusu</span></li>
+                    <li><code className="font-mono font-bold text-green-600">Do While / Loop</code>: Koşul doğru olduğu sürece.</li>
+                    <li><span className="text-red-600 font-medium">Çıkış Komutları:</span> Exit For veya Exit Do.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section className="mb-12">
+        <h2 className="text-2xl font-bold text-blue-700 mb-4">4. Ünite: Nesneler (Application & Workbooks)</h2>
+        
+        <div className="space-y-6">
+            <div className="bg-yellow-50 p-4 rounded border border-yellow-100">
+                <h3 className="text-lg font-bold text-yellow-900 mb-2">Application Nesnesi (Çok Önemli)</h3>
+                <ul className="space-y-3 text-yellow-900">
+                    <li>
+                        <code className="font-mono font-bold">ScreenUpdating = False</code>
+                        <span className="text-sm opacity-80">Kod çalışırken ekran titremesini önler (hızlandırır).</span>
+                    </li>
+                    <li>
+                        <code className="font-mono font-bold">DisplayAlerts = False</code>
+                        <span className="text-sm opacity-80">Uyarı mesajlarını (Silme onayı vb.) kapatır.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 className="font-bold text-slate-900 mb-2">Worksheet (Sayfa)</h3>
+                    <ul className="text-slate-700 space-y-1 text-sm">
+                        <li>• İsim Değiştirme: <code className="bg-slate-100 px-1">.Name = &quot;Yeni&quot;</code></li>
+                        <li>• Ekleme: <code className="bg-slate-100 px-1">Worksheets.Add</code></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 className="font-bold text-slate-900 mb-2">Workbook (Kitap)</h3>
+                    <ul className="text-slate-700 space-y-1 text-sm">
+                        <li>• Yeni Kitap: <code className="bg-slate-100 px-1">Workbooks.Add</code></li>
+                        <li>• Açma: <code className="bg-slate-100 px-1">Workbooks.Open</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section className="bg-slate-900 text-slate-300 p-6 rounded-lg shadow-lg mt-8">
+        <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+            🎯 Sınav İçin &quot;Hızlı Tekrar&ldquo; Listesi
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 text-sm">
+            <div className="flex justify-between border-b border-slate-700 pb-1">
+                <span>Değişken Zorunluluğu</span>
+                <code className="text-pink-400 font-mono">Option Explicit</code>
+            </div>
+            <div className="flex justify-between border-b border-slate-700 pb-1">
+                <span>Kod Editörü</span>
+                <code className="text-pink-400 font-mono">Alt + F11</code>
+            </div>
+            <div className="flex justify-between border-b border-slate-700 pb-1">
+                <span>Kalan Bulma</span>
+                <code className="text-pink-400 font-mono">Mod</code>
+            </div>
+            <div className="flex justify-between border-b border-slate-700 pb-1">
+                <span>Veri Korumalı Boyutlandırma</span>
+                <code className="text-pink-400 font-mono">ReDim Preserve</code>
+            </div>
+            <div className="flex justify-between border-b border-slate-700 pb-1">
+                <span>Ekran Tazelemeyi Kapat</span>
+                <code className="text-pink-400 font-mono">ScreenUpdating = False</code>
+            </div>
+            <div className="flex justify-between border-b border-slate-700 pb-1">
+                <span>Koleksiyon Döngüsü</span>
+                <code className="text-pink-400 font-mono">For Each</code>
+            </div>
+            <div className="flex justify-between border-b border-slate-700 pb-1">
+                <span>Makrolu Dosya</span>
+                <code className="text-pink-400 font-mono">.xlsm</code>
+            </div>
+             <div className="flex justify-between border-b border-slate-700 pb-1">
+                <span>Döngüden Çıkış</span>
+                <code className="text-pink-400 font-mono">Exit Do / For</code>
+            </div>
+        </div>
+    </section>
+    <span>Sorular genellikle &quot;Aşağıdakilerden hangisi ... yapar?&quot; şeklinde kodun işlevini sormaya yöneliktir. Kod parçalarını okuyup ne işe yaradığını anlamaya çalışman yeterlidir. Başarılar!</span>
+</div>
+      )
     },
     kullanicideneyimtasarimi: {
       id: "kullanicideneyimtasarimi",
