@@ -16,7 +16,7 @@ export async function listFiles() {
     const files = [];
     const res = await drive.files.list({
       q: `'${folderId}' in parents and mimeType = 'application/pdf' and trashed=false`,
-      fields: "files(id, name)",
+      fields: "files(id, name,size)",
       pageSize: 1000,
     });
     
@@ -26,7 +26,7 @@ export async function listFiles() {
           id: file.id,
           name: file.name,
           url: `https://drive.google.com/uc?id=${file.id}&export=download`,
-          size:file.size ||0
+          size:file.size ? parseInt(file.size) : 0
         });
       }
     }
@@ -51,7 +51,7 @@ export async function listFiles() {
 
       const contentsRes = await drive.files.list({
         q: `'${courseFolder.id}' in parents and trashed=false`,
-        fields: "files(id, name, mimeType)",
+        fields: "files(id, name,size, mimeType)",
         pageSize: 1000,
       });
 
@@ -62,9 +62,8 @@ export async function listFiles() {
             id: file.id,
             name: file.name,
             url: `https://drive.google.com/uc?id=${file.id}&export=download`,
-            size:file.size||0
+            size:file.size ? parseInt(file.size) : 0
           });
-          console.log(file.size)
         }
         
         else if (file.mimeType === "application/vnd.google-apps.folder") {
