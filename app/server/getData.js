@@ -9,7 +9,6 @@ const auth = new google.auth.GoogleAuth({
 
 const drive = google.drive({ version: "v3", auth });
 const folderId = "1QYL6n2BvQAaEEbth1Bu1ZUyP6vDPu78X";
-const folderPdfs = {};
 export async function listFiles() {
   const folderPdfs = {};
 
@@ -26,7 +25,8 @@ export async function listFiles() {
         files.push({
           id: file.id,
           name: file.name,
-          url: `https://drive.google.com/uc?id=${file.id}&export=download`
+          url: `https://drive.google.com/uc?id=${file.id}&export=download`,
+          size:file.size ||0
         });
       }
     }
@@ -61,8 +61,10 @@ export async function listFiles() {
           folderPdfs[courseName].pdfs.push({
             id: file.id,
             name: file.name,
-            url: `https://drive.google.com/uc?id=${file.id}&export=download`
+            url: `https://drive.google.com/uc?id=${file.id}&export=download`,
+            size:file.size||0
           });
+          console.log(file.size)
         }
         
         else if (file.mimeType === "application/vnd.google-apps.folder") {
