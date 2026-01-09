@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useRef, useEffect } from "react";
 import { listFiles } from "./server/getData";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function CoursesWebsite() {
 
@@ -10,6 +11,7 @@ export default function CoursesWebsite() {
       title: "Dijital Dönüşüm",
       description: "Dijital Dönüşüm",
       pdfs: [],
+      finalnotlar:[],
       cikmissorular:[],
       onemli:(
     <div className="max-w-3xl mx-auto py-12 px-6 font-sans text-slate-800 bg-white min-h-screen">
@@ -144,6 +146,7 @@ export default function CoursesWebsite() {
       title: "İngilizce - I",
       description: "İngilizce",
       pdfs: [],
+      finalnotlar:[],
       cikmissorular:[]
     },
     bilisimteknolojileri: {
@@ -152,6 +155,7 @@ export default function CoursesWebsite() {
       description: "Programlama, Veri Yapıları",
       pdfs: [],
       cikmissorular:[],
+      finalnotlar:[],
       onemli:(
        <div className="max-w-3xl mx-auto py-12 px-6 font-sans text-slate-800 bg-white min-h-screen">
           <section className="mb-12">
@@ -333,6 +337,7 @@ export default function CoursesWebsite() {
       description: "Programlama, Veri Yapıları",
       pdfs: [],
       cikmissorular:[],
+      finalnotlar:[],
       onemli:(
         <div className="max-w-3xl mx-auto py-12 px-6 font-sans text-slate-800 bg-white min-h-screen">
     <section className="mb-12">
@@ -515,6 +520,7 @@ export default function CoursesWebsite() {
       description: "Programlama, Veri Yapıları",
       pdfs: [],
       cikmissorular:[],
+      finalnotlar:[],
       onemli:(
       <div className="max-w-3xl mx-auto py-12 px-6 font-sans text-slate-800 bg-white min-h-screen">
 
@@ -650,6 +656,7 @@ export default function CoursesWebsite() {
       description: "Kodlamanın Temelleri",
       pdfs: [],
       cikmissorular:[],
+      finalnotlar:[],
       onemli:(
         <div className="max-w-3xl mx-auto py-12 px-6 font-sans text-slate-800 bg-white min-h-screen">
     <section className="mb-12">
@@ -836,7 +843,6 @@ export default function CoursesWebsite() {
     },
   });
 
-  const [query, setQuery] = useState("");
   const [selectedCourse, setSelectedCourse] = useState({value:"",course:[]});
   const [loading,setLoading] = useState(false);
   const fileInputRef = useRef(null); 
@@ -851,10 +857,10 @@ useEffect(() => {
         const updated = { ...prev };
 
         for (const key of Object.keys(prev)) {
-          // API'den gelen veriyi al (Artık data[key] bir obje: { pdfs: [], cikmissorular: [] })
+          // API'den gelen veriler (Artık data[key] bir obje: { pdfs: [], cikmissorular: [] })
           const courseData = data[key] || {};
 
-          // --- 1. PDF'leri İşle (Mevcut Mantık) ---
+          // --- 1. Vize Notları ---
           const incomingPdfs = courseData.pdfs || [];
           const currentPdfs = prev[key].pdfs || [];
           const combinedPdfs = [...currentPdfs, ...incomingPdfs];
@@ -863,7 +869,7 @@ useEffect(() => {
             index === self.findIndex((t) => t.name === pdf.name)
           );
 
-          // --- 2. ÇIKMIŞ SORULARI İşle (Yeni Eklenen Kısım - Aynı Mantık) ---
+          // --- 2. ÇIKMIŞ SORULAR ---
           const incomingQuestions = courseData.cikmissorular || [];
           // State'te henüz bu alan yoksa boş dizi kabul et
           const currentQuestions = prev[key].cikmissorular || [];
@@ -872,12 +878,21 @@ useEffect(() => {
           const uniqueQuestions = combinedQuestions.filter((q, index, self) =>
             index === self.findIndex((t) => t.name === q.name)
           );
+          // ---3. Final Notlar ---
+          const incomingFinal = courseData.finalnotlar || [];
+          const currentFinal = prev[key].finalnotlar || [];
+          const combinedFinal = [...currentFinal, ...incomingFinal];
+
+          const uniqueFinal = combinedFinal.filter((q, index, self) =>
+            index === self.findIndex((t) => t.name === q.name)
+          );
 
           // Güncellenmiş objeyi oluştur
           updated[key] = {
             ...prev[key],
             pdfs: uniquePdfs,
-            cikmissorular: uniqueQuestions // Yeni temizlenmiş listeyi buraya atıyoruz
+            cikmissorular: uniqueQuestions,
+            finalnotlar: uniqueFinal,
           };
         }
 
@@ -944,15 +959,15 @@ useEffect(() => {
           <div className="grid gap-4">
             {!loading && Object.values(courses).length > 0 ? (
             Object.values(courses).map((course) => (
-              <article
+              <Accordion
+                type="single"
+                collapsible
+                className="w-full"
+                defaultValue="item-1"
                 key={course.id}
-                className="bg-white rounded-2xl p-6 shadow border border-gray-100 hover:shadow-lg transition"
               >
-                <div className="flex items-start justify-between">
-                  {/* Başlık alanı */}
-                  <div className="flex items-center gap-3">
-                    <span className="text-xl font-bold text-gray-800">{course.title}</span>
-
+                <AccordionItem value="item-1" className={"flex items-start justify-between"}>
+                    <AccordionTrigger className={"text-xl font-bold text-gray-800"}>{course.title}</AccordionTrigger>
                     <button
                       onClick={() => setSelectedCourse({ value: "onemli", course })}
                       className="w-7 h-7 flex items-center justify-center bg-gray-300 text-white rounded-full text-sm hover:bg-gray-800"
@@ -962,33 +977,94 @@ useEffect(() => {
                       <path fill="#448aff" d="M15 8.014A7.457 7.457 0 0 0 8.014 15h-.028A7.456 7.456 0 0 0 1 8.014v-.028A7.456 7.456 0 0 0 7.986 1h.028A7.457 7.457 0 0 0 15 7.986z" />
                     </svg>
                     </button>
-                  </div>
-                </div>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger onClick={() => setSelectedCourse({ value: "notlar", course })}>Vize Notları</AccordionTrigger>
+                    <AccordionContent>
+                        <div className="mt-6">
+                        {course.pdfs.length === 0 && (
+                            <div className="text-center text-gray-600">Bu derse ait PDF bulunmuyor.</div>
+                        )}
+                            {course.pdfs.map((pdf) => (
+                            <div key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                                <div>
+                                <div className="font-medium text-black">{pdf.name}</div>
+                                <div className="text-xs text-gray-500">{Math.round((pdf.size || 0) / 1024)} KB</div>
+                                </div>
 
+                                <div className="flex items-center gap-2">
+                                <a href={pdf.url} target="_blank" rel="noreferrer" download={pdf.name} className="text-sm bg-indigo-600 text-white px-3 py-1 rounded">
+                                    İndir
+                                </a>
+                                </div>
+                            </div>
+                            ))}
+                        </div>
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>Final Notları</AccordionTrigger>
+                    <AccordionContent>
+                        <div className="mt-6">
+                        {course.finalnotlar.length === 0 && (
+                            <div className="text-center text-gray-600">Bu derse ait PDF bulunmuyor.</div>
+                        )}
+                            {course.finalnotlar.map((pdf) => (
+                            <div key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                                <div>
+                                <div className="font-medium text-black">{pdf.name}</div>
+                                <div className="text-xs text-gray-500">{Math.round((pdf.size || 0) / 1024)} KB</div>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                <a href={pdf.url} target="_blank" rel="noreferrer" download={pdf.name} className="text-sm bg-indigo-600 text-white px-3 py-1 rounded">
+                                    İndir
+                                </a>
+                                </div>
+                            </div>
+                            ))}
+                        </div>
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger onClick={() => setSelectedCourse({ value: "cikmissorular", course })}>Çıkmış Sorular</AccordionTrigger>
+                    <AccordionContent>
+                            <div className="mt-6">
+                            {course.cikmissorular.length === 0 && (
+                                <div className="text-center text-gray-600">Bu derse ait PDF bulunmuyor.</div>
+                            )} 
+                                {course.cikmissorular.map((pdf) => (
+                                <div key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                                    <div>
+                                    <div className="font-medium text-black">{pdf.name}</div>
+                                    <div className="text-xs text-gray-500">{Math.round((pdf.size || 0) / 1024)} KB</div>
+                                    </div>
+
+                                    <div className="flex items-center gap-2">
+                                    <a href={pdf.url} target="_blank" rel="noreferrer" download={pdf.name} className="text-sm bg-indigo-600 text-white px-3 py-1 rounded">
+                                        İndir
+                                    </a>
+                                    </div>
+                                </div>
+                                ))}
+                            <div className="mt-6">
+                                <div className="mt-3 flex items-center gap-3">
+                                <span className="text-sm text-gray-500">Seçilen dosya tarayıcıda geçici olarak kaydedilir. Gerçek kullanım için sunucu depolama kullanın.</span>
+                                </div>
+                            </div>
+                            </div>
+                    </AccordionContent>
+                </AccordionItem>
                 {/* Etiketler + Butonlar */}
                 <div className="mt-4 flex flex-wrap items-center gap-3">
                   {/* Sayaçlar */}
                   <span className="text-sm bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">
-                    {course.pdfs.length} Not • {course.cikmissorular.length} Çıkmış Soru
+                    {course.pdfs.length+course.finalnotlar.length} Not • {course.cikmissorular.length} Çıkmış Soru
                   </span>
 
                   {/* Notları görüntüle */}
-                  <button
-                    onClick={() => openCourse({ value: "notlar", course })}
-                    className="text-sm bg-indigo-600 text-white px-4 py-1.5 rounded-md hover:bg-indigo-700 transition"
-                  >
-                    Görüntüle / İndir
-                  </button>
-
-                  {/* Çıkmış sorular */}
-                  <button
-                    onClick={() => openCourse({ value: "cikmissorular", course })}
-                    className="text-sm bg-red-600 text-white px-4 py-1.5 rounded-md hover:bg-red-700 transition"
-                  >
-                    Çıkmış Sorular
-                  </button>
                 </div>
-              </article>
+              </Accordion>
             ))
             ) : (
               <div className="text-center text-gray-600">Dosyalar yükleniyor lütfen bekleyiniz...</div>
@@ -1008,7 +1084,7 @@ useEffect(() => {
       </main>
 
       {/* Modal: Seçili dersin PDF listesi */}
-      {selectedCourse.value==="notlar" ? (
+       {/* {selectedCourse.value==="notlar" ? (
         <div className="fixed inset-0 z-40 flex items-center justify-center">
           <div className="absolute inset-0 bg-black/40" onClick={closeCourse}></div>
           <div className="relative bg-white w-full max-w-3xl mx-4 rounded-2xl p-6 shadow-xl z-50">
@@ -1130,7 +1206,7 @@ useEffect(() => {
           </div>
         </div>
       )
-      :(<div></div>)}
+      :(<div></div>)} */}
 
       {/* Gizli file input - admin için */}
       <input ref={fileInputRef} type="file" accept="application/pdf" className="hidden" onChange={onFileChange} />

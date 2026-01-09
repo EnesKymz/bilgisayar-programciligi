@@ -44,7 +44,8 @@ export async function listFiles() {
       const courseName = courseFolder.name; 
       
       folderPdfs[courseName] = {
-        pdfs: [],           // Ders notları buraya
+        pdfs: [],   
+        finalnotlar:[],        
         cikmissorular: []  
       };
 
@@ -69,6 +70,10 @@ export async function listFiles() {
           if (folderNameLower.includes("cikmis") || folderNameLower.includes("soru")) {
             const questions = await getPdfsInFolder(file.id);
             folderPdfs[courseName].cikmissorular.push(...questions);
+          }
+          if (folderNameLower.includes("finalnotlari")) {
+            const questions = await getPdfsInFolder(file.id);
+            folderPdfs[courseName].finalnotlar.push(...questions);
           }
         }
       }
