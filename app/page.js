@@ -960,33 +960,22 @@ useEffect(() => {
       {!loading && Object.values(courses).length > 0 ? (
         Object.values(courses).map((course, index) => (
           <div key={course.id} className="border rounded-xl bg-white shadow-sm overflow-hidden">
-            
+            {/* --- ANA Accordion --- */}
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value={`course-${index}`} className="border-none">
-                
-                {/* --- ANA BAŞLIK (TRIGGER) --- */}
                 <AccordionTrigger className="px-6 py-4 hover:bg-gray-50 hover:no-underline">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between w-full pr-4 gap-2 text-left">
-                    
-                    {/* Ders Başlığı */}
+                  <div className="flex flex-col md:flex-row md:items-center justify-between w-full pr-4 gap-2 text-left">  
                     <span className="text-xl font-bold text-gray-800">
                       {course.title}
                     </span>
-
-                    {/* Özet Rozet */}
                     <span className="text-xs font-medium bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full whitespace-nowrap">
                       {course.pdfs.length} Vize • {course.finalnotlar.length} Final • {course.cikmissorular.length} Soru Dosyası
-                    </span>
-                    
+                    </span>  
                   </div>
                 </AccordionTrigger>
-
-                {/* --- ANA İÇERİK (CONTENT) --- */}
-                <AccordionContent className="bg-gray-50/50 px-6 pb-6 pt-2">
-                  
-                  {/* İç İçe Accordion Başlıyor */}
+                <AccordionContent className="bg-gray-50/50 px-6 pb-6 pt-2"> 
+                  {/* 2. Accordion İç İçe Accordion  */}
                   <Accordion type="single" collapsible className="w-full flex flex-col gap-y-3">
-                    
                     {/* 1. Vize Notları */}
                     <AccordionItem value="vize-files" className="border bg-white rounded-lg px-0 overflow-hidden">
                       <AccordionTrigger className="px-4 py-3 font-semibold text-indigo-700 hover:bg-indigo-50 hover:no-underline">
@@ -1018,7 +1007,6 @@ useEffect(() => {
                         </div>
                       </AccordionContent>
                     </AccordionItem>
-
                     {/* 2. Final Notları */}
                     <AccordionItem value="final-files" className="border bg-white rounded-lg px-0 overflow-hidden">
                       <AccordionTrigger className="px-4 py-3 font-semibold text-indigo-700 hover:bg-indigo-50 hover:no-underline">
@@ -1052,7 +1040,6 @@ useEffect(() => {
                         </div>
                       </AccordionContent>
                     </AccordionItem>
-
                     {/* 3. Çıkmış Sorular */}
                     <AccordionItem value="cikmis-files" className="border bg-white rounded-lg px-0 overflow-hidden">
                       <AccordionTrigger className="px-4 py-3 font-semibold text-indigo-700 hover:bg-indigo-50 hover:no-underline">
