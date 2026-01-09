@@ -1020,6 +1020,11 @@ useEffect(() => {
                                 </div>
 
                                 <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-2">
+                                 <a href={`https://drive.google.com/file/d/${pdf.id}/preview`} target="_blank" rel="noreferrer" download={pdf.name} className="text-sm bg-indigo-600 text-white px-3 py-1 rounded">
+                                    Görüntüle
+                                 </a>
+                                </div>
                                 <a href={pdf.url} target="_blank" rel="noreferrer" download={pdf.name} className="text-sm bg-indigo-600 text-white px-3 py-1 rounded">
                                     İndir
                                 </a>
