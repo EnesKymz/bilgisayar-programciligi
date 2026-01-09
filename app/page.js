@@ -949,7 +949,7 @@ useEffect(() => {
       <header className="max-w-6xl mx-auto mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Dersler & PDF Arşivi</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Bilgisayar Programcılığı</h1>
           </div>
         </div>
       </header>
@@ -1072,15 +1072,6 @@ useEffect(() => {
 
           </div>
         </section>
-
-        <aside className="space-y-4">
-          <div className="bg-white p-4 rounded-2xl shadow">
-            <h3 className="font-semibold">Yardımcı Bilgiler</h3>
-            <ul className="text-sm text-gray-600 mt-2 space-y-2">
-              <li>- PDF&apos;leri indirmek için &apos;İndir&apos; butonuna tıklayın.</li>
-            </ul>
-          </div>
-        </aside>
       </main>
 
       {/* Modal: Seçili dersin PDF listesi */}
