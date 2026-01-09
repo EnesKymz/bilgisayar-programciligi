@@ -1068,11 +1068,6 @@ useEffect(() => {
                                     </div>
                                 </div>
                                 ))}
-                            <div className="mt-6">
-                                <div className="mt-3 flex items-center gap-3">
-                                <span className="text-sm text-gray-500">Seçilen dosya tarayıcıda geçici olarak kaydedilir. Gerçek kullanım için sunucu depolama kullanın.</span>
-                                </div>
-                            </div>
                             </div>
                       </AccordionContent>
                     </AccordionItem>
@@ -1090,11 +1085,6 @@ useEffect(() => {
     </div>
   </section>
 </main>
-
-      {/* Gizli file input - admin için */}
-      <input ref={fileInputRef} type="file" accept="application/pdf" className="hidden" onChange={onFileChange} />
-
-      <footer className="max-w-6xl mx-auto mt-12 text-center text-gray-500 text-sm">© {new Date().getFullYear()} Dersler - Eğitim Portalı</footer>
     </div>
   );
 }
