@@ -959,7 +959,6 @@ useEffect(() => {
     <div className="grid gap-4">
       {!loading && Object.values(courses).length > 0 ? (
         Object.values(courses).map((course, index) => (
-          // Her dersi ayrı bir kart gibi sarmalıyoruz
           <div key={course.id} className="border rounded-xl bg-white shadow-sm overflow-hidden">
             
             <Accordion type="single" collapsible className="w-full">
@@ -974,7 +973,7 @@ useEffect(() => {
                       {course.title}
                     </span>
 
-                    {/* Özet Rozet (Başlığın sağında veya altında görünür) */}
+                    {/* Özet Rozet */}
                     <span className="text-xs font-medium bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full whitespace-nowrap">
                       {course.pdfs.length} Vize • {course.finalnotlar.length} Final • {course.cikmissorular.length} Soru Dosyası
                     </span>
@@ -1090,7 +1089,6 @@ useEffect(() => {
                             </div>
                       </AccordionContent>
                     </AccordionItem>
-
                   </Accordion>
                 </AccordionContent>
               </AccordionItem>
@@ -1105,131 +1103,6 @@ useEffect(() => {
     </div>
   </section>
 </main>
-
-      {/* Modal: Seçili dersin PDF listesi */}
-       {/* {selectedCourse.value==="notlar" ? (
-        <div className="fixed inset-0 z-40 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/40" onClick={closeCourse}></div>
-          <div className="relative bg-white w-full max-w-3xl mx-4 rounded-2xl p-6 shadow-xl z-50">
-            <div className="flex items-start justify-between">
-              <div>
-                <h3 className="text-2xl font-semibold text-black">{selectedCourse.course.title}</h3>
-                <p className="text-gray-500 mt-1">{selectedCourse.course.description}</p>
-              </div>
-              <div className="space-x-2">
-                <button onClick={closeCourse} className="text-gray-500 hover:text-gray-800">Kapat</button>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              {selectedCourse.course.pdfs.length === 0 && (
-                <div className="text-center text-gray-600">Bu derse ait PDF bulunmuyor.</div>
-              )}
-
-                  <ul className="space-y-3 overflow-auto max-h-[400px] pr-2">
-                  {selectedCourse.course.pdfs.map((pdf) => (
-                  <li key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                    <div>
-                      <div className="font-medium text-black">{pdf.name}</div>
-                      <div className="text-xs text-gray-500">{Math.round((pdf.size || 0) / 1024)} KB</div>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <a href={pdf.url} target="_blank" rel="noreferrer" download={pdf.name} className="text-sm bg-indigo-600 text-white px-3 py-1 rounded">
-                        İndir
-                      </a>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-6">
-                <div className="mt-3 flex items-center gap-3">
-                  <span className="text-sm text-gray-500">Seçilen dosya tarayıcıda geçici olarak kaydedilir. Gerçek kullanım için sunucu depolama kullanın.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) 
-      : selectedCourse.value==="cikmissorular" ? (
-        <div className="fixed inset-0 z-40 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/40" onClick={closeCourse}></div>
-          <div className="relative bg-white w-full max-w-3xl mx-4 rounded-2xl p-6 shadow-xl z-50">
-            <div className="flex items-start justify-between">
-              <div>
-                <h3 className="text-2xl font-semibold text-black">{selectedCourse.course.title}</h3>
-                <p className="text-gray-500 mt-1">{selectedCourse.course.description}</p>
-              </div>
-              <div className="space-x-2">
-                <button onClick={closeCourse} className="text-gray-500 hover:text-gray-800">Kapat</button>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              {selectedCourse.course.cikmissorular.length === 0 && (
-                <div className="text-center text-gray-600">Bu derse ait PDF bulunmuyor.</div>
-              )}
-
-                  <ul className="space-y-3 overflow-auto max-h-[400px] pr-2">
-                  {selectedCourse.course.cikmissorular.map((pdf) => (
-                  <li key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                    <div>
-                      <div className="font-medium text-black">{pdf.name}</div>
-                      <div className="text-xs text-gray-500">{Math.round((pdf.size || 0) / 1024)} KB</div>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <a href={pdf.url} target="_blank" rel="noreferrer" download={pdf.name} className="text-sm bg-indigo-600 text-white px-3 py-1 rounded">
-                        İndir
-                      </a>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-6">
-                <div className="mt-3 flex items-center gap-3">
-                  <span className="text-sm text-gray-500">Seçilen dosya tarayıcıda geçici olarak kaydedilir. Gerçek kullanım için sunucu depolama kullanın.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-      : selectedCourse.value==="onemli" ?(
-         
-  <div className="fixed inset-0 z-40 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/40" onClick={closeCourse}></div>
-          <div className="relative bg-white w-full max-w-3xl mx-4 rounded-2xl p-6 shadow-xl z-50">
-            <div className="flex items-start justify-between">
-              <div className="space-y-3 overflow-auto max-h-[400px] pr-2">
-                <h3 className="text-2xl font-semibold text-black">{selectedCourse.course.title} </h3>
-                <div className="text-gray-500 mt-1">{selectedCourse.course.onemli}</div>
-              </div>
-              <div className="space-x-2">
-                <button onClick={closeCourse} className="text-gray-500 hover:text-gray-800">Kapat</button>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              {selectedCourse.course.pdfs.length === 0 && (
-                <div className="text-center text-gray-600">Bu derse ait AI özet bulunmuyor.</div>
-              )}
-
-                  <ul className="space-y-3 overflow-auto max-h-[400px] pr-2">
-              </ul>
-
-              <div className="mt-6">
-                <div className="mt-3 flex items-center gap-3">
-                  <span className="text-sm text-gray-500">Bu içerik yapay zekâ tarafından üretilmiştir. Bilgilendirme amaçlıdır; kesinlik içermez.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-      :(<div></div>)} */}
 
       {/* Gizli file input - admin için */}
       <input ref={fileInputRef} type="file" accept="application/pdf" className="hidden" onChange={onFileChange} />
