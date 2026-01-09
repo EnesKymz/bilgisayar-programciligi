@@ -1,6 +1,13 @@
 "use server"
 const { google } = require("googleapis");
 
+function convertSize(size) {
+  console.log("Original size:", size);
+  if (size < 1024) return size + " B";
+  else if (size < 1024 * 1024) return (size / 1024).toFixed(2) + " KB";
+  else if (size < 1024 * 1024 * 1024) return (size / (1024 * 1024)).toFixed(2) + " MB";
+  else return (size / (1024 * 1024 * 1024)).toFixed(2) + " GB";
+}
 const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
 const auth = new google.auth.GoogleAuth({
   credentials,
@@ -26,7 +33,7 @@ export async function listFiles() {
           id: file.id,
           name: file.name,
           url: `https://drive.google.com/uc?id=${file.id}&export=download`,
-          size:file.size ? parseInt(file.size) : 0
+          size:file.size ? convertSize(file.size) : 0
         });
       }
     }
@@ -62,7 +69,7 @@ export async function listFiles() {
             id: file.id,
             name: file.name,
             url: `https://drive.google.com/uc?id=${file.id}&export=download`,
-            size:file.size ? parseInt(file.size) : 0
+            size:file.size ? convertSize(file.size) : 0
           });
         }
         

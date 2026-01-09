@@ -10,6 +10,7 @@
 !.yarn/releases
 !.yarn/versions
 service-account.json
+app/oldLessonUI.js
 # testing
 /coverage
 
