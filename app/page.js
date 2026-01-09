@@ -1059,7 +1059,7 @@ useEffect(() => {
                 <div className="mt-4 flex flex-wrap items-center gap-3">
                   {/* Sayaçlar */}
                   <span className="text-sm bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">
-                    {course.pdfs.length+course.finalnotlar.length} Not • {course.cikmissorular.length} Çıkmış Soru
+                    {course.pdfs.length} Vize Not • {course.finalnotlar.length} Final Not • {course.cikmissorular.length} Çıkmış Soru
                   </span>
 
                   {/* Notları görüntüle */}
