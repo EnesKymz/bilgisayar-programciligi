@@ -13,6 +13,7 @@ export default function CoursesWebsite() {
       pdfs: [],
       finalnotlar:[],
       cikmissorular:[],
+      kitap:[],
       onemli:(
     <div className="max-w-3xl mx-auto py-12 px-6 font-sans text-slate-800 bg-white min-h-screen">
     <section className="mb-12">
@@ -147,7 +148,8 @@ export default function CoursesWebsite() {
       description: "İngilizce",
       pdfs: [],
       finalnotlar:[],
-      cikmissorular:[]
+      cikmissorular:[],
+      kitap:[],
     },
     bilisimteknolojileri: {
       id: "bilisimteknolojileri",
@@ -155,6 +157,7 @@ export default function CoursesWebsite() {
       description: "Programlama, Veri Yapıları",
       pdfs: [],
       cikmissorular:[],
+      kitap:[],
       finalnotlar:[],
       onemli:(
        <div className="max-w-3xl mx-auto py-12 px-6 font-sans text-slate-800 bg-white min-h-screen">
@@ -337,6 +340,7 @@ export default function CoursesWebsite() {
       description: "Programlama, Veri Yapıları",
       pdfs: [],
       cikmissorular:[],
+      kitap:[],
       finalnotlar:[],
       onemli:(
         <div className="max-w-3xl mx-auto py-12 px-6 font-sans text-slate-800 bg-white min-h-screen">
@@ -521,6 +525,7 @@ export default function CoursesWebsite() {
       pdfs: [],
       cikmissorular:[],
       finalnotlar:[],
+      kitap:[],
       onemli:(
       <div className="max-w-3xl mx-auto py-12 px-6 font-sans text-slate-800 bg-white min-h-screen">
 
@@ -657,6 +662,7 @@ export default function CoursesWebsite() {
       pdfs: [],
       cikmissorular:[],
       finalnotlar:[],
+      kitap:[],
       onemli:(
         <div className="max-w-3xl mx-auto py-12 px-6 font-sans text-slate-800 bg-white min-h-screen">
     <section className="mb-12">
@@ -886,13 +892,21 @@ useEffect(() => {
           const uniqueFinal = combinedFinal.filter((q, index, self) =>
             index === self.findIndex((t) => t.name === q.name)
           );
+          // ---4. Kitaplar ---
+          const incomingKitap = courseData.kitap || [];
+          const currentKitap = prev[key].kitap || [];
+          const combinedKitap = [...currentKitap, ...incomingKitap];
 
+          const uniqueKitap = combinedKitap.filter((q, index, self) =>
+            index === self.findIndex((t) => t.name === q.name)
+          );
           // Güncellenmiş objeyi oluştur
           updated[key] = {
             ...prev[key],
             pdfs: uniquePdfs,
             cikmissorular: uniqueQuestions,
             finalnotlar: uniqueFinal,
+            kitap: uniqueKitap
           };
         }
 
@@ -1052,6 +1066,37 @@ useEffect(() => {
                                 <div className="text-center text-gray-600">Bu derse ait PDF bulunmuyor.</div>
                             )} 
                                 {course.cikmissorular.map((pdf) => (
+                                <div key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                                    <div>
+                                    <div className="font-medium text-black">{pdf.name}</div>
+                                    <div className="text-xs text-gray-500">{pdf.size} KB</div>
+                                    </div>
+
+                                    <div className="flex items-center gap-2">
+                                    <a href={`https://drive.google.com/file/d/${pdf.id}/preview`} target="_blank" rel="noreferrer" download={pdf.name} className="text-sm bg-indigo-600 text-white px-3 py-1 rounded">
+                                        Görüntüle
+                                    </a>
+                                    <a href={pdf.url} target="_blank" rel="noreferrer" download={pdf.name} className="text-sm bg-indigo-600 text-white px-3 py-1 rounded">
+                                        İndir
+                                    </a>
+                                    </div>
+                                </div>
+                                ))}
+                            </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                    {/* Kitap */}
+                    <AccordionItem value="kitap" className="border bg-white rounded-lg px-0 overflow-hidden">
+                      <AccordionTrigger className="px-4 py-3 font-semibold text-indigo-700 hover:bg-indigo-50 hover:no-underline">
+                         <span>📚 Kitap</span>
+                         <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded ml-2">{course.kitap.length} Dosya</span>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-4 py-2 border-t">
+                        <div className="mt-6">
+                            {course.kitap.length === 0 && (
+                                <div className="text-center text-gray-600">Bu derse ait PDF bulunmuyor.</div>
+                            )} 
+                                {course.kitap.map((pdf) => (
                                 <div key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
                                     <div>
                                     <div className="font-medium text-black">{pdf.name}</div>

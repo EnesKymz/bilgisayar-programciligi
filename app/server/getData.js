@@ -53,7 +53,8 @@ export async function listFiles() {
       folderPdfs[courseName] = {
         pdfs: [],   
         finalnotlar:[],        
-        cikmissorular: []  
+        cikmissorular: [],
+        kitap: [] 
       };
 
       const contentsRes = await drive.files.list({
@@ -82,6 +83,10 @@ export async function listFiles() {
           if (folderNameLower.includes("finalnotlari")) {
             const questions = await getPdfsInFolder(file.id);
             folderPdfs[courseName].finalnotlar.push(...questions);
+          }
+          if (folderNameLower.includes("kitap")) {
+            const questions = await getPdfsInFolder(file.id);
+            folderPdfs[courseName].kitap.push(...questions);
           }
         }
       }
