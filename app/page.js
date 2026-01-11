@@ -1069,7 +1069,7 @@ useEffect(() => {
                                 <div key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
                                     <div>
                                     <div className="font-medium text-black">{pdf.name}</div>
-                                    <div className="text-xs text-gray-500">{pdf.size} KB</div>
+                                    <div className="text-xs text-gray-500">{pdf.size}</div>
                                     </div>
 
                                     <div className="flex items-center gap-2">
@@ -1100,7 +1100,7 @@ useEffect(() => {
                                 <div key={pdf.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
                                     <div>
                                     <div className="font-medium text-black">{pdf.name}</div>
-                                    <div className="text-xs text-gray-500">{pdf.size} KB</div>
+                                    <div className="text-xs text-gray-500">{pdf.size}</div>
                                     </div>
 
                                     <div className="flex items-center gap-2">
