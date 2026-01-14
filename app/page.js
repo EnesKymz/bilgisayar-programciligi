@@ -181,7 +181,7 @@ useEffect(() => {
                     {/* 2. Final Notları */}
                     <AccordionItem value="vize-files" className="border bg-white rounded-lg px-0 overflow-hidden">
                       <AccordionTrigger className="px-4 py-3 font-semibold text-indigo-700 hover:bg-indigo-50 hover:no-underline">
-                        <span>📄 Vize Notları</span>
+                        <span>🎓 Final Notları</span>
                         <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded ml-2">{course.pdfs.length} Dosya</span>
                       </AccordionTrigger>
                       <AccordionContent className="px-4 py-2 border-t">
