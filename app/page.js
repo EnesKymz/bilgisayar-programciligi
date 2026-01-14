@@ -179,14 +179,14 @@ useEffect(() => {
                       </AccordionContent>
                     </AccordionItem>
                     {/* 2. Final Notları */}
-                    <AccordionItem value="final-files" className="border bg-white rounded-lg px-0 overflow-hidden">
+                    <AccordionItem value="vize-files" className="border bg-white rounded-lg px-0 overflow-hidden">
                       <AccordionTrigger className="px-4 py-3 font-semibold text-indigo-700 hover:bg-indigo-50 hover:no-underline">
-                         <span>🎓 Final Notları</span>
-                         <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded ml-2">{course.finalnotlar.length} Dosya</span>
+                        <span>📄 Vize Notları</span>
+                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded ml-2">{course.pdfs.length} Dosya</span>
                       </AccordionTrigger>
                       <AccordionContent className="px-4 py-2 border-t">
                         <div className="mt-6">
-                        {course.finalnotlar.length === 0 && (
+                        {course.pdfs.length === 0 && (
                             <div className="text-center text-gray-600">Bu derse ait PDF bulunmuyor.</div>
                         )}
                             {course.finalnotlar.map((pdf) => (
@@ -195,16 +195,14 @@ useEffect(() => {
                                 <div className="font-medium text-black">{pdf.name}</div>
                                 <div className="text-xs text-gray-500">{pdf.size}</div>
                                 </div>
-
-                                <div className="flex items-center gap-2">
                                 <div className="flex items-center gap-2">
                                  <a href={`https://drive.google.com/file/d/${pdf.id}/preview`} target="_blank" rel="noreferrer" download={pdf.name} className="text-sm bg-indigo-600 text-white px-3 py-1 rounded">
                                     Görüntüle
-                                 </a>
-                                </div>
+                                </a>
                                 <a href={pdf.url} target="_blank" rel="noreferrer" download={pdf.name} className="text-sm bg-indigo-600 text-white px-3 py-1 rounded">
                                     İndir
                                 </a>
+
                                 </div>
                             </div>
                             ))}
